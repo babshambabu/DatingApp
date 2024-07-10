@@ -24,8 +24,8 @@ app.post('/login',(req,res)=>{
         password:req.body.password
     })
 user.save(req.body).
-then((user)=>{
-    console.log(`serverSide ${user}`)
+then((user){
+    console.log(user)
     res.json(user)})
 .catch((err)=>res.json(err))
 })
