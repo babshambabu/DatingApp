@@ -10,23 +10,23 @@ const Auth = () => {
     email: "",
     password: "",
   });
-  const [isSignUp, setIsSignUp] = useState(false);
-  console.log(isSignUp);
+ 
+  
 
   const handleChange=(e)=>{
     setInputs((prevState)=>({...prevState,
         [e.target.name] :e.target.value 
     }))
   }
-  const handleSubmit=(e)=>{
+  const handleSubmit=async(e)=>{
     e.preventDefault();
-    axios.post('http://localhost:3001/login', {inputs})
-    .then((result)=>console.log(result)).catch((err)=>console.log(err))
+    const res= await axios.post('http://localhost:3001/login', inputs)
+   console.log(res.data)
    
     console.log(inputs);
   }
    const resetState=()=>{
-    setIsSignUp(!isSignUp);
+    
     setInputs({name:"",email:"",password:""})
     
    }
@@ -46,8 +46,8 @@ const Auth = () => {
           boxShadow={"5px 5px 10px #ccc"}
           sx={{ ":hover": { boxShadow: "10px 10px 20px #ccc" } }}
         >
-          <Typography variant="h2">{isSignUp ? "SignUp" : "Login"}</Typography>
-          {isSignUp && (
+          <Typography variant="h2"> "SignUp" </Typography>
+           
             <TextField
             name="name"
             value={inputs.name}
@@ -57,7 +57,7 @@ const Auth = () => {
               type="text"
               placeholder="Name"
             />
-          )}
+          
           <TextField
           name="email"
           value={inputs.email}
@@ -84,20 +84,19 @@ const Auth = () => {
             margin-top={"15px"}
             border-radius={3}
           >
-            {isSignUp ? "SignUp" : "Login"}
+            "SignUp"
           </Button>
           <br />
           OR
           <br />
           <Button
-            onClick={() => {resetState()
-            //   setIsSignUp(!isSignUp);
-            }}
+            onClick={() => {resetState() }}
             sx={{ marginTop: 3, borderRadius: 3, marginBottom: 10 }}
           >
-            {" "}
-            {isSignUp ? "Login" : "SignUp"}
+           
+            "Login"
           </Button>
+          
         </Box>
       </form>
     </div>
