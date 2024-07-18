@@ -13,10 +13,10 @@ const LoginOtp = () => {
 
   const handleSendOtp = async () => {
     try {
-        alert("handleSendOtp-Before axios")
+      
       const response = await axios.post("http://localhost:3001/auth/send-otp", { phone });
       console.log(response.data);
-      alert("handleSendOtp-after axios")
+      
       setOtpSent(true);
     } catch (err) {
       console.log(err);
@@ -28,7 +28,7 @@ const LoginOtp = () => {
       const response = await axios.post("http://localhost:3001/auth/check-otp", { phone, code: otp });
       if (response.data.success) {
         console.log("OTP verified");
-        navigate('/')
+        navigate('/registration1')
         // Navigate to home or do something after successful OTP verification
       } else {
         console.log("Invalid OTP");

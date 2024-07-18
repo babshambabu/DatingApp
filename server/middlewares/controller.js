@@ -29,9 +29,11 @@ const checkOtp = async (req, res) => {
     const response = await checkVerification(phone, code);
     console.log('Verification response:', response);
     if (response.status === 'approved') {
+      console.log(phone)
+      console.log(code)
       return res.status(200).json({ success: true,
         message: "successful",
-        user: req.user,});
+        user: phone});
     } else {
       res.status(400).json({ success: false, message: 'Invalid OTP' });
     }

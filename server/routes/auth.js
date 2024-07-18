@@ -13,6 +13,9 @@ router.post('/check-otp', checkOtp);
 
 
 router.get("/login/success", (req, res) => {
+  //console.log(req.user);
+  //console.log(res);
+  console.log("before LoginSuccess");
   if (req.user) {
     console.log("LoginSuccess");
     res.status(200).json({
@@ -23,6 +26,32 @@ router.get("/login/success", (req, res) => {
     });
   }
 });
+
+
+
+router.get("/login/status", (req, res) => {
+  console.log(req.user);
+  //console.log(res);
+  console.log("LoginCheck");
+  
+  if (req.user) {
+    res.status(200).json({
+      success: true,
+      loggedin: true,
+      user: req.user,
+    });
+  } else{
+    res.status(200).json({
+      success: false,
+      loggedin: false
+    });
+  }
+
+
+});
+
+
+
 
 router.get("/login/failed", (req, res) => {
   res.status(401).json({

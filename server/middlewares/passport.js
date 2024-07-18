@@ -12,6 +12,7 @@ passport.use(new GoogleStrategy({
   callbackURL: "/auth/google/callback"
 }, async (accessToken, refreshToken, profile, done) => {
   console.log(profile);
+  console.log(profile.emails[0]);
   // Here you can add your logic to store user in the database
   return done(null, profile);
 }));
