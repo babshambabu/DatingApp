@@ -8,13 +8,12 @@ const bodyParser = require('body-parser');
 const passport = require("passport");
 const jwt = require('jsonwebtoken');
 const multer = require('multer');
+var bcrypt = require('bcryptjs');
 
-const authenticateJWT = require('./middleware/auth');
-const passportSetup= require('./middlewares/passport')
+const authenticateJWT = require('./middlewares/auth');
+
 const passportSetup = require('./middlewares/passport');
 const authRoute = require('./routes/auth');
-const session = require("express-session");
-
 const User = require('./models/userSchema')
 
 //load env vaiables
@@ -61,23 +60,32 @@ mongoose.connect(process.env.MONGO_URI)
   .then(() => { console.log("DB CONNECTED"); })
   .catch((err) => { console.log("DB CONNECTION ERROR", err); });
 
-// Define routes
+
+
+
+
+
 app.post('/login', async (req, res) => {
-  const { name, email, password } = req.body.inputs; // Ensure this matches the frontend data structure
-  console.log("My SERVER");
-  console.log(req.body);
-  try {
-    
-    const newUser = new User({ name, email, password });
-    await newUser.save();
-    res.status(201).json(newUser);
-    console.log(newUser);
-  } catch (err) {
-    console.log(err.message);
-    res.status(400).json({ error: err.message });
+  console.log("in login")
+  const { email, password } = req.body;
+  const user = await User.findOne({ email });
+  if (!user) {
+    console.log("no user")
+    return res.status(400).json({ error: 'Invalid email or password' });
   }
+
+
+  if (password != user.password) {
+    console.log("no password")
+    return res.status(400).json({ error: 'Invalid email or password' });
+  }
+
+  const token = jwt.sign({ id: user._id }, process.env.JWTSECRET, { expiresIn: '1h' });
+  res.json({ token   });
+  
 });
 
+/*/
 
 app.post('/api/update', authenticateJWT, upload.fields([{ name: 'profilePicture' }, { name: 'images' }, { name: 'reel' }]), async (req, res) => {
   const { age, dob, education, hobbies, interests, drinkingHabits, smokingHabits } = req.body;
@@ -117,31 +125,25 @@ app.post('/api/update', authenticateJWT, upload.fields([{ name: 'profilePicture'
 
 
 
-app.post('/api/login', async (req, res) => {
-  const { email, password } = req.body;
-  const user = await User.findOne({ email });
-  if (!user) {
-    return res.status(400).json({ error: 'Invalid email or password' });
-  }
-
-  const isMatch = await bcrypt.compare(password, user.password);
-  if (!isMatch) {
-    return res.status(400).json({ error: 'Invalid email or password' });
-  }
-
-  const token = jwt.sign({ id: user._id }, jwtSecret, { expiresIn: '1h' });
-  res.json({ token });
-});
 
 
+
+
+/*/
 
 
 app.post('/signup', async (req, res) => {
   const { name, email, password } = req.body
-  console.log("My SERVER")
-  console.log(req.body)
+  //console.log("My SERVER")
+  //console.log(req.body)
   try {
-    console.log(email)
+    //console.log(email)
+    const user = await User.findOne({ email });
+    if (user) {
+      console.log("cannot create as user exists")
+      return res.status(400).json({ error: 'user alreadyexist' });
+    }
+
     const newUser = new User({ name, email, password });
     await newUser.save();
     res.status(201).json(newUser);

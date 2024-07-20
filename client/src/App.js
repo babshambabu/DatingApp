@@ -7,6 +7,8 @@ import SignUp from './Routes/SignUp'
 import Home from './Routes/Home'
 import RegSec1 from './Routes/RegSec1';
 import RegSec2 from './Routes/RegSec2';
+import RegSec3 from './Routes/RegSec3';
+import Matrimony from './Routes/Matrimony';
 
 import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom'
 import axios from 'axios';
@@ -44,6 +46,9 @@ const App = () => {
          <Route path="/login-otp" element={<LoginOtp />} />
           <Route path="/registration1" element={<RegSec1 />} />
           <Route path="/registration2" element={<RegSec2 />} />
+          <Route path="/registration3" element={<RegSec3 />} />
+          <Route path="/matrimony" element={<Matrimony />} />
+          
         </Routes>
       </BrowserRouter>
       

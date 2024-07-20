@@ -3,8 +3,8 @@ import { TextField, Grid, Button, Typography, Radio, RadioGroup, FormControlLabe
 import ImageUploading from 'react-images-uploading';
 import { AuthContext } from '../AuthContext';
 import { updateFormData, handleFileChange, updateUser } from '../features/actions';
-
-const RegSec1 = () => {
+import { Box } from "@mui/material"
+    const RegSec1 = () => {
   const { formData, setFormData } = useContext(AuthContext);
 
   const handleChange = (e) => {
@@ -36,6 +36,19 @@ const RegSec1 = () => {
   };
 
   return (
+    <Box
+          display="flex"
+          flexDirection="column"
+          alignItems="center"
+          margin="auto"
+          justifyContent="center"
+          maxWidth={400}
+          mt={5}
+          p={5}
+          boxShadow="5px 5px 10px #ccc"
+          sx={{ ":hover": { boxShadow: "10px 10px 20px #ccc" } }}
+        >
+    
     <Grid container spacing={2}>
       <Grid item xs={12}>
         <Typography variant="h5">Update Profile</Typography>
@@ -168,6 +181,7 @@ const RegSec1 = () => {
         </Button>
       </Grid>
     </Grid>
+    </Box>
   );
 };
 

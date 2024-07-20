@@ -1,12 +1,29 @@
 import imghome from "../assets/right-partner.jpg"
 
-const Home = () => {
-    return (
-        <div className="home">
-           
-           <img src={imghome} alt=""/>  
-                </div>
-    )
-}
+import React, { useContext, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../AuthContext';
 
-export default Home
+const Homepage = () => {
+  const { checkLoginStatus } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const verifyLoginStatus = async () => {
+      const isLoggedIn = await checkLoginStatus();
+      if (!isLoggedIn) {
+        navigate('/login');
+      }
+    };
+    verifyLoginStatus();
+  }, [checkLoginStatus, navigate]);
+
+  return (
+    <div className="home">
+           
+    <img src={imghome} alt=""/>  
+    </div>
+  );
+};
+
+export default Homepage;
