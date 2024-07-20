@@ -12,6 +12,8 @@ const Homepage = () => {
     const verifyLoginStatus = async () => {
       const isLoggedIn = await checkLoginStatus();
       if (!isLoggedIn) {
+        console.log("not logged in")
+       if(0)
         navigate('/login');
       }
     };

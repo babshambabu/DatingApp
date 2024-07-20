@@ -27,10 +27,23 @@ router.get("/login/success", (req, res) => {
   }
 });
 
+router.get('/login/status', (req, res) => {
+  const token = req.headers['x-access-token'];
+  if (!token) return res.status(401).send({ loggedIn: false, reason: "notoken" });
 
+  jwt.verify(token, SECRET_KEY, (err, decoded) => {
+    if (err) return res.status(401).send({ loggedIn: false, reason: "jwt unverified" });
+
+    res.send({ loggedIn: true });
+  });
+});
+
+
+
+/*/
 
 router.get("/login/status", (req, res) => {
-  console.log(req.user);
+  //console.log(req.user);
   //console.log(res);
   console.log("LoginCheck");
   
@@ -50,7 +63,7 @@ router.get("/login/status", (req, res) => {
 
 });
 
-
+/*/
 
 
 router.get("/login/failed", (req, res) => {

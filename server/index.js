@@ -71,13 +71,13 @@ app.post('/login', async (req, res) => {
   const user = await User.findOne({ email });
   if (!user) {
     console.log("no user")
-    return res.status(400).json({ error: 'Invalid email or password' });
+    return res.status(400).json({ error: 'Invalid email ' });
   }
 
 
   if (password != user.password) {
     console.log("no password")
-    return res.status(400).json({ error: 'Invalid email or password' });
+    return res.status(400).json({ error: 'Invalid  password' });
   }
 
   const token = jwt.sign({ id: user._id }, process.env.JWTSECRET, { expiresIn: '1h' });

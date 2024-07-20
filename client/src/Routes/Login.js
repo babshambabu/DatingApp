@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
 import Box from "@mui/material/Box";
 import { Button, TextField, Typography } from "@mui/material";
-import axios from "axios";
 //import Google from "../assets/google-signin.png";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from '../AuthContext';
+
 
 const Login = () => {
   const [inputs, setInputs] = useState({ email: "", password: "", phone: "" });
   const navigate = useNavigate();
- 
+  const { login } = useContext(AuthContext);
 
   const google = () => {
     window.open("http://localhost:3001/auth/google", "_self");
@@ -24,13 +25,20 @@ const Login = () => {
  
   async function handleSubmit(e) {
     e.preventDefault();
+    
+    await login(inputs.email,inputs.password);
+    //AuthProvider.login(inputs.email,inputs.password);
+    /*
     await axios
       .post("http://localhost:3001/login", {
         email: inputs.email,
         password: inputs.password,
       })
-      .then((result) => console.log(result))
+      .then((result) => {
+        console.log(result)
+      })
       .catch((err) => console.log(err));
+*/
   }
 
   const resetState = () => {

@@ -21,7 +21,7 @@ const App = () => {
     const checkAuth = async () => {
       try {
         console.log("hi")
-        const response = await axios.get("http://localhost:3001/auth/login/status", { withCredentials: true });
+        const response = await axios.get("http://localhost:3001/login/status", { withCredentials: true });
         console.log(response.data)
         if (response.data.loggedin) {
           console.log(response.user);

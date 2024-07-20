@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+//import { useNavigate } from 'react-router-dom';
 const { default: jwtDecode } = require("jwt-decode");
 
 
@@ -31,7 +31,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (username, password) => {
     try {
-      const response = await axios.post('/api/login', { username, password });
+      const response = await axios.post('http://localhost:3001/login', { username, password });
       const { token } = response.data;
       localStorage.setItem('token', token);
       setToken(token);
@@ -50,7 +50,7 @@ export const AuthProvider = ({ children }) => {
 
   const checkLoginStatus = async () => {
     try {
-      const response = await axios.get('/api/login/status', {
+      const response = await axios.get('http://localhost:3001/login/status', {
         headers: { 'x-access-token': token },
       });
       return response.data.loggedIn;
