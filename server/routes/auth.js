@@ -1,8 +1,9 @@
 const router = require("express").Router();
 const passport = require("passport");
 const cors = require("cors");
+const jwt = require('jsonwebtoken');
 const { sendOtp, checkOtp } = require("../middlewares/controller");
-
+require("dotenv").config();
 // Handle preflight requests for CORS
 router.options("*", cors());
 
@@ -31,7 +32,7 @@ router.get('/login/status', (req, res) => {
   const token = req.headers['x-access-token'];
   if (!token) return res.status(401).send({ loggedIn: false, reason: "notoken" });
 
-  jwt.verify(token, SECRET_KEY, (err, decoded) => {
+  jwt.verify(token, 'babshadatingapp', (err, decoded) => {
     if (err) return res.status(401).send({ loggedIn: false, reason: "jwt unverified" });
 
     res.send({ loggedIn: true });
@@ -86,6 +87,7 @@ router.get("/login/failed", (req, res) => {
 //   });
 // });
 router.get("/logout", (req, res, next) => {
+  console.log()
   req.logout((err) => {
     if (err) {
       return next(err);
@@ -94,7 +96,7 @@ router.get("/logout", (req, res, next) => {
       if (err) {
         return next(err);
       }
-      res.clearCookie('connect.sid'); // Clear session cookie
+      res.clearCookie('token'); // Clear session cookie
       res.redirect("http://localhost:3000"); // Redirect to the login page
     });
   });

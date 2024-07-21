@@ -66,28 +66,28 @@ mongoose.connect(process.env.MONGO_URI)
 
 
 app.post('/login', async (req, res) => {
-  console.log("in login")
+
   const { email, password } = req.body;
   const user = await User.findOne({ email });
   if (!user) {
     console.log("no user")
-    return res.status(400).json({ error: 'Invalid email ' });
+    return res.status(200).json({ error: 'Invalid email ' });
   }
 
 
   if (password != user.password) {
     console.log("no password")
-    return res.status(400).json({ error: 'Invalid  password' });
+    return res.status(200).json({ error: 'Invalid  password' });
   }
-
+  console.log("in login")
   const token = jwt.sign({ id: user._id }, process.env.JWTSECRET, { expiresIn: '1h' });
-  res.json({ token   });
+  res.status(200).json({ token   });
   
 });
 
 /*/
 
-app.post('/api/update', authenticateJWT, upload.fields([{ name: 'profilePicture' }, { name: 'images' }, { name: 'reel' }]), async (req, res) => {
+app.post('/update', authenticateJWT, upload.fields([{ name: 'profilePicture' }, { name: 'images' }, { name: 'reel' }]), async (req, res) => {
   const { age, dob, education, hobbies, interests, drinkingHabits, smokingHabits } = req.body;
   const profilePicture = req.files.profilePicture ? req.files.profilePicture[0].path : null;
   const reel = req.files.reel ? req.files.reel[0].path : null;

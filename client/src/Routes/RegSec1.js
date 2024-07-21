@@ -4,7 +4,8 @@ import ImageUploading from 'react-images-uploading';
 import { AuthContext } from '../AuthContext';
 import { updateFormData, handleFileChange, updateUser } from '../features/actions';
 import { Box } from "@mui/material"
-    const RegSec1 = () => {
+
+const RegSec1 = () => {
   const { formData, setFormData } = useContext(AuthContext);
 
   const handleChange = (e) => {

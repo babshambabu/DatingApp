@@ -1,8 +1,8 @@
 import React, { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
 //import { useNavigate } from 'react-router-dom';
-const { default: jwtDecode } = require("jwt-decode");
-
+//const { default: jwtDecode } = require("jwt-decode");
+import jwtDecode from 'jwt-decode';
 
 export const AuthContext = createContext();
 
@@ -24,22 +24,36 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     if (token) {
+      try {
       const decoded = jwtDecode(token);
       setUser(decoded);
+      } catch (error) {
+        console.error('Token decode error:', error);
+        setToken(null);
+        localStorage.removeItem('token');
+      }
     }
   }, [token]);
 
-  const login = async (username, password) => {
+  const login = async (email, password) => {
     try {
-      const response = await axios.post('http://localhost:3001/login', { username, password });
+      console.log("login start")
+      const response = await axios.post('http://localhost:3001/login', { email, password });
+      console.log(response.data)
       const { token } = response.data;
+      console.log(token)
       localStorage.setItem('token', token);
       setToken(token);
       const decoded = jwtDecode(token);
+      console.log(decoded);
       setUser(decoded);
+      console.log("login end")
+      return true
     } catch (error) {
       console.error('Login error:', error);
+      return false
     }
+    
   };
 
   const logout = () => {
@@ -49,8 +63,11 @@ export const AuthProvider = ({ children }) => {
   };
 
   const checkLoginStatus = async () => {
+    if (!token || token === "undefined" || token === undefined
+    ) return false;
     try {
-      const response = await axios.get('http://localhost:3001/login/status', {
+      alert(token)
+      const response = await axios.get('http://localhost:3001/auth/login/status', {
         headers: { 'x-access-token': token },
       });
       return response.data.loggedIn;

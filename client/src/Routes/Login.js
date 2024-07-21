@@ -26,19 +26,17 @@ const Login = () => {
   async function handleSubmit(e) {
     e.preventDefault();
     
-    await login(inputs.email,inputs.password);
-    //AuthProvider.login(inputs.email,inputs.password);
-    /*
-    await axios
-      .post("http://localhost:3001/login", {
-        email: inputs.email,
-        password: inputs.password,
-      })
-      .then((result) => {
-        console.log(result)
-      })
-      .catch((err) => console.log(err));
-*/
+    await login(inputs.email,inputs.password)      
+    .then((result) => {
+      console.log("result",result)
+       if(result )
+       navigate("/");
+    else{
+      alert("wrong username or password")
+    } 
+    })
+    .catch((err) => console.log(err));;
+
   }
 
   const resetState = () => {

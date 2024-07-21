@@ -1,59 +1,46 @@
-
-import React,{ useEffect, useState } from 'react';
+import React, { useEffect, useContext } from 'react';
 import './App.css';
-import Navbar from './components/Navbar'
-import Login from './Routes/Login'
-import SignUp from './Routes/SignUp'
-import Home from './Routes/Home'
+import Navbar from './components/Navbar';
+import Login from './Routes/Login';
+import SignUp from './Routes/SignUp';
+import Home from './Routes/Home';
 import RegSec1 from './Routes/RegSec1';
 import RegSec2 from './Routes/RegSec2';
 import RegSec3 from './Routes/RegSec3';
 import Matrimony from './Routes/Matrimony';
-
-import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom'
-import axios from 'axios';
 import LoginOtp from './Routes/LoginOtp';
+import { Routes, Route, useNavigate } from 'react-router-dom';
+import { AuthContext } from './AuthContext';
 
 const App = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const { checkLoginStatus } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        console.log("hi")
-        const response = await axios.get("http://localhost:3001/login/status", { withCredentials: true });
-        console.log(response.data)
-        if (response.data.loggedin) {
-          console.log(response.user);
-          setIsAuthenticated(true);
-        }
-      } catch (error) {
-        setIsAuthenticated(false);
+    const verifyLoginStatus = async () => {
+      const isLoggedIn = await checkLoginStatus();
+      if (!isLoggedIn) {
+        navigate('/login');
       }
     };
-    checkAuth();
-  }, []);
-
+    verifyLoginStatus();
+  }, [checkLoginStatus, navigate]);
 
   return (
     <div className="App">
-      <BrowserRouter>
-      <Navbar isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />
+        <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/login" element={isAuthenticated? <Navigate to="/" /> : <Login />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
-         <Route path="/login-otp" element={<LoginOtp />} />
+          <Route path="/login-otp" element={<LoginOtp />} />
           <Route path="/registration1" element={<RegSec1 />} />
           <Route path="/registration2" element={<RegSec2 />} />
           <Route path="/registration3" element={<RegSec3 />} />
           <Route path="/matrimony" element={<Matrimony />} />
-          
         </Routes>
-      </BrowserRouter>
-      
     </div>
   );
-}
+};
 
 export default App;
