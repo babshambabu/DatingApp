@@ -29,8 +29,12 @@ const Login = () => {
     await login(inputs.email,inputs.password)      
     .then((result) => {
       console.log("result",result)
+      alert("after login")
        if(result )
-       navigate("/");
+        if(result.age)
+          navigate("/");
+        else
+      navigate("/registration1");
     else{
       alert("wrong username or password")
     } 

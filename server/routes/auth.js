@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 const { sendOtp, checkOtp } = require("../middlewares/controller");
 require("dotenv").config();
 // Handle preflight requests for CORS
-router.options("*", cors());
+
 
 const CLIENT_URL = "http://localhost:3000";
 
@@ -86,21 +86,14 @@ router.get("/login/failed", (req, res) => {
 //     res.redirect("http://localhost:3000");
 //   });
 // });
-router.get("/logout", (req, res, next) => {
-  console.log()
-  req.logout((err) => {
-    if (err) {
-      return next(err);
-    }
-    req.session.destroy((err) => {
-      if (err) {
-        return next(err);
-      }
-      res.clearCookie('token'); // Clear session cookie
-      res.redirect("http://localhost:3000"); // Redirect to the login page
-    });
-  });
+router.get('/logout', (req, res) => {
+  // Clear the JWT token from cookies
+  res.clearCookie('token');
+  return res.json({ message: 'Logged out successfully' });
 });
+
+
+
 router.get("/google", passport.authenticate("google", { scope: ["profile", "email"] }));
 
 router.get(

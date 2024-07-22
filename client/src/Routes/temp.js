@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { TextField, Button, RadioGroup, FormControlLabel, Radio, Grid, Typography } from '@mui/material';
-import ImageUploading from 'react-images-uploading';
+import MultipleImageUploader from 'react-multiple-image-uploader';
 import axios from 'axios';
 import { AuthContext } from '../AuthContext';
 
@@ -11,30 +11,21 @@ const RegSec1 = () => {
   const [education, setEducation] = useState('');
   const [hobbies, setHobbies] = useState('');
   const [interests, setInterests] = useState('');
-  const [drinking, setDrinking] = useState('');
-  const [smoking, setSmoking] = useState('');
+  const [drinking, setDrinking] = useState(''); // Initialize with empty string
+  const [smoking, setSmoking] = useState('');   // Initialize with empty string
   const [profilePicture, setProfilePicture] = useState(null);
   const [images, setImages] = useState([]);
   const [reel, setReel] = useState(null);
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const handleProfilePictureChange = (imageList) => {
-    setProfilePicture(imageList[0]?.file);
-  };
-
-  const handleImagesChange = (imageList) => {
-    setImages(imageList.map(image => image.file));
-  };
-
-  const handleReelChange = (e) => {
-    setReel(e.target.files[0]);
+  const handleImageChange = (imageList) => {
+    setImages(imageList);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append('userId', user._id);  // Append user ID from context
     formData.append('age', age);
     formData.append('dob', dob);
     formData.append('education', education);
@@ -44,15 +35,15 @@ const RegSec1 = () => {
     formData.append('smoking', smoking);
     formData.append('profilePicture', profilePicture);
     images.forEach((image, index) => {
-      formData.append(`images`, image);
+      formData.append(`image${index}`, image);
     });
     formData.append('reel', reel);
 
     try {
-      await axios.post('http://localhost:3001/api/register', formData, {
+      await axios.post('/api/register', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
-          'x-access-token': localStorage.getItem('token'), // Include JWT token
+          'x-access-token': localStorage.getItem('token'),
         },
       });
       navigate('/registration2');
@@ -128,52 +119,25 @@ const RegSec1 = () => {
         </Grid>
         <Grid item xs={12}>
           <Typography>Upload Profile Picture</Typography>
-          <ImageUploading
-            value={profilePicture ? [profilePicture] : []}
-            onChange={handleProfilePictureChange}
-            maxNumber={1}
-            dataURLKey="data_url"
-          >
-            {({ imageList, onImageUpload }) => (
-              <div>
-                <button type="button" onClick={onImageUpload}>Upload Profile Picture</button>
-                {imageList.map((image, index) => (
-                  <div key={index}>
-                    <img src={image['data_url']} alt="" width="100" />
-                  </div>
-                ))}
-              </div>
-            )}
-          </ImageUploading>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) => setProfilePicture(e.target.files[0])}
+          />
         </Grid>
         <Grid item xs={12}>
           <Typography>Upload Multiple Images</Typography>
-          <ImageUploading
-            multiple
-            value={images.map(file => ({ file }))}
-            onChange={handleImagesChange}
-            maxNumber={10}
-            dataURLKey="data_url"
-          >
-            {({ imageList, onImageUpload, onImageRemoveAll }) => (
-              <div>
-                <button type="button" onClick={onImageUpload}>Upload Multiple Images</button>
-                <button type="button" onClick={onImageRemoveAll}>Remove All Images</button>
-                {imageList.map((image, index) => (
-                  <div key={index}>
-                    <img src={image['data_url']} alt="" width="100" />
-                  </div>
-                ))}
-              </div>
-            )}
-          </ImageUploading>
+          <MultipleImageUploader
+            onChange={handleImageChange}
+            maxUpload={10}
+          />
         </Grid>
         <Grid item xs={12}>
           <Typography>Upload a Reel</Typography>
           <input
             type="file"
             accept="video/*"
-            onChange={handleReelChange}
+            onChange={(e) => setReel(e.target.files[0])}
           />
         </Grid>
         <Grid item xs={12}>

@@ -48,7 +48,7 @@ export const AuthProvider = ({ children }) => {
       console.log(decoded);
       setUser(decoded);
       console.log("login end")
-      return true
+      return decoded;
     } catch (error) {
       console.error('Login error:', error);
       return false
@@ -66,7 +66,7 @@ export const AuthProvider = ({ children }) => {
     if (!token || token === "undefined" || token === undefined
     ) return false;
     try {
-      alert(token)
+      //alert(token)
       const response = await axios.get('http://localhost:3001/auth/login/status', {
         headers: { 'x-access-token': token },
       });

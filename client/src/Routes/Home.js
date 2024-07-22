@@ -5,15 +5,15 @@ import { useContext } from 'react';
 
 import { AuthContext } from '../AuthContext';
 
-const Homepage = () => {
+const Home = () => {
   const { user } = useContext(AuthContext);
-  console.log(user)
+  console.log("showing Home",user)
   return (
     <div className="home">
-        <h1>Welcome, {user?.email || 'Guest'}</h1>   
+        <h1>Welcome, {user? user.name : 'Guest'}</h1>   
     <img src={imghome} alt=""/>  
     </div>
   );
 };
 
-export default Homepage;
+export default Home;

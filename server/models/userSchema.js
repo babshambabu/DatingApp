@@ -15,6 +15,24 @@ const UserSchema = new mongoose.Schema({
   smokingHabits: String,
   reel: String,
   images: [String],
+  role: String, // Employee, Employer, Job Seeker
+  companyName: String,
+  designation: String,
+  location: String,
+  jobTitle: String,
+  expertiseLevel: String, // Beginner, Intermediate, Expert
+  relationshipType: String ,
+  registerInMatrimony: String ,
+
+  // Additional fields
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+  updatedAt: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 module.exports= mongoose.model("User", UserSchema);

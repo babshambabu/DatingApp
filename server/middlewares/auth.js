@@ -1,22 +1,36 @@
 const jwt = require('jsonwebtoken');
-const User = require('../models/userSchema'); // Adjust the path according to your project structure
 
 // JWT secret
 const jwtSecret = 'babshadatingapp';
 
-const authenticateJWT = (req, res, next) => {
-  const token = req.header('Authorization');
+
+
+const verifyToken= (req, res, next) => {
+  const token = req.headers['x-access-token'];
   if (!token) {
-    return res.status(401).json({ message: 'Access Denied' });
+    return res.status(403).send({ auth: false, message: 'No token provided.' });
   }
-
-  try {
-    const verified = jwt.verify(token, jwtSecret);
-    req.user = verified;
+  jwt.verify(token, jwtSecret, (err, decoded) => {
+    if (err) {
+      return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
+    }
+    req.userId = decoded.id;
     next();
-  } catch (error) {
-    res.status(400).json({ message: 'Invalid Token' });
-  }
+  });
 };
+// const authenticateJWT = (req, res, next) => {
+//   const token = req.header('Authorization');
+//   if (!token) {
+//     return res.status(401).json({ message: 'Access Denied' });
+//   }
 
-module.exports = authenticateJWT;
+//   try {
+//     const verified = jwt.verify(token, jwtSecret);
+//     req.user = verified;
+//     next();
+//   } catch (error) {
+//     res.status(400).json({ message: 'Invalid Token' });
+//   }
+// };
+
+module.exports = verifyToken;
