@@ -7,7 +7,6 @@ import { AuthContext } from '../AuthContext';
 
 const Home = () => {
   const { user } = useContext(AuthContext);
-  console.log("showing Home",user)
   return (
     <div className="home">
         <h1>Welcome, {user? user.name : 'Guest'}</h1>   

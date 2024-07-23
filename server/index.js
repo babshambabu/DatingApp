@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const passport = require("passport");
+require("./middlewares/passport"); // Ensure this path is correct
 const jwt = require("jsonwebtoken");
 const authRoute = require("./routes/auth");
 const User = require("./models/userSchema");
