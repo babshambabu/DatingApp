@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Box from "@mui/material/Box";
 import { Button, TextField, Typography } from "@mui/material";
-import axios from "axios";
+// import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from '../AuthContext';
 //import Google from "../assets/google-signin.png";
 
 const SignUp = () => {
@@ -10,9 +11,10 @@ const SignUp = () => {
     name: "",
     email: "",
     password: "",
-    phone: ""
+    
   });
   const navigate= useNavigate();
+  const { signup } = useContext(AuthContext);
  
 
   const google = () => {
@@ -27,27 +29,50 @@ const SignUp = () => {
   };
 
 
+  
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+      try {
+        const result = await signup(inputs.name, inputs.email, inputs.password);
+        if (result) {
+          console.log("Signup result:", result);
+          navigate('/login');  // Redirect to login after signup
+        } else {
+          console.error("Signup failed");
+        }
+      } catch (err) {
+        console.error("Signup error:", err);
+        alert("Failed to sign up. Please try again.");
+      }
+    };
+    const resetState = () => {
+      setInputs({ name: "", email: "", password: "", phone: "" });
+    };
+  
+    
+ 
+  // async function handleSubmit(e) {
+  //   e.preventDefault();
+  //   await signup(inputs.name,inputs.email,inputs.password)      
+  //   .then((result) => {
+  //     console.log("result",result)
+  //     alert("after login")
+  //   // await axios
+  //   //   .post("http://localhost:3001/signup", {
+  //   //     name: inputs.name,
+  //   //     email: inputs.email,
+  //   //     password: inputs.password,
+  //   //   })
+  //     .then((result) =>{ console.log(result);
+  //       navigate('/registration1');
 
-  async function handleSubmit(e) {
-    e.preventDefault();
-    await axios
-      .post("http://localhost:3001/signup", {
-        name: inputs.name,
-        email: inputs.email,
-        password: inputs.password,
-      })
-      .then((result) =>{ console.log(result);
-        navigate('/');
+  //     })
+  // })
+  //     .catch((err) => console.log(err));
+  // }
 
-      })
-      .catch((err) => console.log(err));
-  }
-
-  const resetState = () => {
-    setInputs({ name: "", email: "", password: "", phone: "" });
-  };
-
-  return (
+ 
+return (
     <div>
       <form onSubmit={handleSubmit}>
         <Box

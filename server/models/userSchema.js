@@ -23,6 +23,20 @@ const UserSchema = new mongoose.Schema({
   expertiseLevel: String, // Beginner, Intermediate, Expert
   relationshipType: String ,
   registerInMatrimony: String ,
+ 
+  description: {
+    type: String,
+    default: '',
+  },
+  friendRequests: {
+    sent: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+    received: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+    accepted: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+    rejected: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+    shortlisted: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+    shortlistedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+    contacted: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+  } ,
 
   // Additional fields
   createdAt: {

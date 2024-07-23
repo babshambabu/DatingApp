@@ -4,6 +4,7 @@ import { TextField, Button, RadioGroup, FormControlLabel, Radio, Grid, Typograph
 import ImageUploading from 'react-images-uploading';
 import axios from 'axios';
 import { AuthContext } from '../AuthContext';
+import Box from "@mui/material/Box";
 
 const RegSec1 = () => {
   const [age, setAge] = useState('');
@@ -63,6 +64,18 @@ const RegSec1 = () => {
 
   return (
     <form onSubmit={handleSubmit}>
+      <Box
+          display="flex"
+          flexDirection="column"
+          alignItems="center"
+          margin="auto"
+          justifyContent="center"
+          maxWidth={400}
+          mt={5}
+          p={5}
+          boxShadow="5px 5px 10px #ccc"
+          sx={{ ":hover": { boxShadow: "10px 10px 20px #ccc" } }}
+        >
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <TextField
@@ -182,6 +195,7 @@ const RegSec1 = () => {
           </Button>
         </Grid>
       </Grid>
+      </Box>
     </form>
   );
 };

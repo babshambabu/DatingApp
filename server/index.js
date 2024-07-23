@@ -10,6 +10,7 @@ const authRoute = require("./routes/auth");
 const User = require("./models/userSchema");
 const userRoutes = require("./routes/userRoutes");
 const path = require("path");
+require("./middlewares/passport"); 
 
 //load env vaiables
 require("dotenv").config();
@@ -74,22 +75,26 @@ app.post("/login", async (req, res) => {
   );
   res.status(200).json({ token });
 });
-
 app.post("/signup", async (req, res) => {
   const { name, email, password } = req.body;
-  //console.log("My SERVER")
-  //console.log(req.body)
   try {
-    //console.log(email)
     const user = await User.findOne({ email });
     if (user) {
       console.log("cannot create as user exists");
-      return res.status(400).json({ error: "user alreadyexist" });
+      return res.status(400).json({ error: "User already exists" });
     }
 
     const newUser = new User({ name, email, password });
     await newUser.save();
-    res.status(201).json(newUser);
+    
+    // Generate JWT for the new user
+    const token = jwt.sign(
+      { id: newUser._id, name: newUser.name, age: newUser.age },
+      process.env.JWTSECRET,
+      { expiresIn: "1h" }
+    );
+
+    res.status(201).json({ token });
     console.log(newUser);
   } catch (err) {
     console.log(err.message);

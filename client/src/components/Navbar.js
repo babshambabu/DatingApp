@@ -11,8 +11,7 @@ const Navbar = () => {
 
   const handleLogout = async (e) => {
     e.preventDefault();
-    alert("in logout")
-    try {
+      try {
       await axios.get("http://localhost:3001/auth/logout", {
         withCredentials: true,
       });
@@ -20,7 +19,7 @@ const Navbar = () => {
       logout();
       if (0)
         navigate("/login");
-      alert("Logged out");
+      
     } catch (error) {
       console.error("Error logging out:", error);
     }
@@ -40,9 +39,14 @@ const Navbar = () => {
         {user ? (
           <li onClick={handleLogout}><a href="/logout">Logout</a></li>
         ) : (
-          <li>
-            <Link to="/login">Login</Link>
-          </li>
+          <><li>
+              <Link to="/login">Login</Link>
+            </li>
+            {/* <li>
+                <Link to="/signup">SignUp</Link>
+              </li> */}
+              </>
+
         )}
       </ul>
     </div>

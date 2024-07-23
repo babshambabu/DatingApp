@@ -34,6 +34,25 @@ export const AuthProvider = ({ children }) => {
       }
     }
   }, [token]);
+  const signup = async (name, email, password) => {
+    try {
+      console.log("signup start");
+      const response = await axios.post('http://localhost:3001/signup', { name, email, password });
+      console.log(response.data);
+      const { token } = response.data;
+      console.log(token);
+      localStorage.setItem('token', token);
+      setToken(token);
+      const decoded = jwtDecode(token);
+      console.log(decoded);
+      setUser(decoded);
+      console.log("signup end");
+      return decoded;
+    } catch (error) {
+      console.error('Signup error:', error);
+      return false;
+    }
+  };
 
   const login = async (email, password) => {
     try {
@@ -78,7 +97,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ formData, setFormData, user, login, logout, checkLoginStatus }}>
+    <AuthContext.Provider value={{ formData, setFormData, user,signup , login, logout, checkLoginStatus }}>
       {children}
     </AuthContext.Provider>
   );
