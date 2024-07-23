@@ -1,10 +1,11 @@
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const jwt = require('jsonwebtoken');
 const User = require('../models/userSchema'); // Adjust the path according to your project structure
 require('dotenv').config();
 
-const GOOGLE_CLIENT_ID = "129100928681-c5fqu6gt97s9mtujpl37h5f6cic4kcq7.apps.googleusercontent.com"
-const GOOGLE_CLIENT_SECRET = "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"
+const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID || "129100928681-c5fqu6gt97s9mtujpl37h5f6cic4kcq7.apps.googleusercontent.com";
+const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET || "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";
 
 passport.use(new GoogleStrategy({
     clientID: GOOGLE_CLIENT_ID,
@@ -14,17 +15,27 @@ passport.use(new GoogleStrategy({
   async (accessToken, refreshToken, profile, done) => {
     try {
       let user = await User.findOne({ googleId: profile.id });
-      if (user) {
-        return done(null, user);
+      if (!user) {
+        user = new User({
+          googleId: profile.id,
+          email: profile.emails[0].value,
+          name: profile.displayName,
+          profilePicture: profile.photos[0].value
+        });
+        await user.save();
       }
 
-      user = new User({
-        googleId: profile.id,
-        email: profile.emails[0].value,
-        name: profile.displayName,
-        profilePicture: profile.photos[0].value
-      });
-      await user.save();
+      // Generate JWT token
+      const token = jwt.sign(
+        { id: user._id, name: user.name, email: user.email },
+        process.env.JWTSECRET,
+        { expiresIn: '1h' }
+      );
+
+      // Include the token in the user object
+      user = user.toObject();
+      user.token = token;
+
       done(null, user);
     } catch (error) {
       done(error, false);

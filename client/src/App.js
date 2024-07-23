@@ -11,6 +11,8 @@ import Matrimony from './Routes/Matrimony';
 import LoginOtp from './Routes/LoginOtp';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import { AuthContext } from './AuthContext';
+import CssBaseline from '@mui/material/CssBaseline';
+import Container from '@mui/material/Container';
 
 const App = () => {
   const { checkLoginStatus } = useContext(AuthContext);
@@ -19,16 +21,15 @@ const App = () => {
   useEffect(() => {
     const verifyLoginStatus = async () => {
       const isLoggedIn = await checkLoginStatus();
-      if (!isLoggedIn) {
-        navigate('/login');
-      }
     };
     verifyLoginStatus();
   }, [checkLoginStatus, navigate]);
 
   return (
-    <div className="App">
-        <Navbar />
+    <div className="App" >
+      <Navbar />
+      <CssBaseline />
+      <Container maxWidth="sm">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
@@ -39,6 +40,7 @@ const App = () => {
           <Route path="/registration3" element={<RegSec3 />} />
           <Route path="/matrimony" element={<Matrimony />} />
         </Routes>
+      </Container>
     </div>
   );
 };
