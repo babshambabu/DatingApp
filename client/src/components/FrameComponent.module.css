@@ -1,0 +1,88 @@
+.footerSeparator {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  margin: 0 !important;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  backdrop-filter: blur(22.7px);
+  border-radius: var(--br-xs);
+  background: linear-gradient(#fff, #fff), rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--light-gray);
+  box-sizing: border-box;
+}
+.messageIcon {
+  width: 24px;
+  height: 24px;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+  z-index: 1;
+}
+.messageWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: var(--padding-5xs) 0 0;
+}
+.horizontalLogoIcon {
+  height: 32px;
+  width: 32px;
+  position: relative;
+  object-fit: cover;
+}
+.home {
+  width: 40px;
+  border-bottom: 1px solid var(--peach-gradient);
+  box-sizing: border-box;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-9xs) var(--padding-9xs) var(--padding-11xs);
+  z-index: 1;
+}
+.addButtonIcon {
+  width: 30px;
+  height: 30px;
+  position: relative;
+  border-radius: 50%;
+  object-fit: cover;
+  z-index: 1;
+}
+.addButtonWrapper,
+.footer,
+.footerWrapper {
+  display: flex;
+  align-items: flex-start;
+  box-sizing: border-box;
+}
+.addButtonWrapper {
+  width: 30px;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: var(--padding-8xs) 0 0;
+}
+.footer,
+.footerWrapper {
+  flex-direction: row;
+  max-width: 100%;
+}
+.footer {
+  flex: 1;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+  justify-content: space-between;
+  padding: var(--padding-xs) var(--padding-39xl);
+  position: relative;
+  gap: var(--gap-xl);
+}
+.footerWrapper {
+  width: 100%;
+  justify-content: flex-start;
+  padding: 0 var(--padding-12xs);
+}

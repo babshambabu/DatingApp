@@ -98,6 +98,15 @@ app.post("/signup", async (req, res) => {
   }
 });
 
+
+
+
+app.get('/api/users', async (req, res) => {
+  const users = await User.find();
+  res.json(users);
+});
+
+
 // Start server
 const port = process.env.PORT || 3001;
 const server = app.listen(port, () => {

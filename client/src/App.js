@@ -9,6 +9,8 @@ import RegSec2 from './Routes/RegSec2';
 import RegSec3 from './Routes/RegSec3';
 import Matrimony from './Routes/Matrimony';
 import LoginOtp from './Routes/LoginOtp';
+import Dashboard from './Routes/Dashboard';
+import Requests from './Routes/Requests';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import { AuthContext } from './AuthContext';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -21,6 +23,7 @@ const App = () => {
   useEffect(() => {
     const verifyLoginStatus = async () => {
       const isLoggedIn = await checkLoginStatus();
+      console.log(isLoggedIn)
     };
     verifyLoginStatus();
   }, [checkLoginStatus, navigate]);
@@ -29,9 +32,9 @@ const App = () => {
     <div className="App" >
       <Navbar />
       <CssBaseline />
-      <Container maxWidth="sm">
+      <Container maxWidth="lg">
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={ (checkLoginStatus)? <Home /> : <Dashboard />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/login-otp" element={<LoginOtp />} />
@@ -39,6 +42,8 @@ const App = () => {
           <Route path="/registration2" element={<RegSec2 />} />
           <Route path="/registration3" element={<RegSec3 />} />
           <Route path="/matrimony" element={<Matrimony />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/requests" element={<Requests />} />
         </Routes>
       </Container>
     </div>
