@@ -11,6 +11,7 @@ import Matrimony from './Routes/Matrimony';
 import LoginOtp from './Routes/LoginOtp';
 import Dashboard from './Routes/Dashboard';
 import Requests from './Routes/Requests';
+import Profile from './Routes/Profile';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import { AuthContext } from './AuthContext';
 import ProfilePage from './Routes/ProfilePage';
@@ -55,7 +56,7 @@ const App = () => {
           <Route path="/registration2" element={<RegSec2 />} />
           <Route path="/registration3" element={<RegSec3 />} />
           <Route path="/matrimony" element={<Matrimony />} />
-          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/profilepage" element={<ProfilePage />} />
             <Route path="/sent" element={<Sent />} />
             <Route path="/received" element={<Received />} />
             <Route path="/accepted" element={<Accepted />} />
@@ -66,6 +67,7 @@ const App = () => {
             <Route path="/messages" element={<Messages />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/requests" element={<Requests />} />
+          <Route path="/profile/*" element={<Profile />} />
         </Routes>
       </Container>
         

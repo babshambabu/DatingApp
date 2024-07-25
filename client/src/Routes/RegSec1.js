@@ -9,6 +9,7 @@ import Box from "@mui/material/Box";
 const RegSec1 = () => {
   const [age, setAge] = useState('');
   const [dob, setDob] = useState('');
+  const [gender, setGender] = useState('');
   const [education, setEducation] = useState('');
   const [hobbies, setHobbies] = useState('');
   const [interests, setInterests] = useState('');
@@ -84,6 +85,16 @@ const RegSec1 = () => {
             onChange={(e) => setAge(e.target.value)}
             fullWidth
           />
+        </Grid>
+        <Grid item xs={12}>
+          <Typography>Gender</Typography>
+          <RadioGroup
+            value={gender}
+            onChange={(e) => setGender(e.target.value)}
+          >
+            <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
+            <FormControlLabel value="No" control={<Radio />} label="No" />
+          </RadioGroup>
         </Grid>
         <Grid item xs={12}>
           <TextField

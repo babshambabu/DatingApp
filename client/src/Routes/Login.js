@@ -28,8 +28,8 @@ const Login = () => {
     
     await login(inputs.email,inputs.password)      
     .then((result) => {
-      console.log("result",result)
-      alert("after login")
+   //   console.log("result",result)
+  //    alert("after login")
        if(result )
         if(result.age)
           navigate("/");

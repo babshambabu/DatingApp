@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import PropTypes from "prop-types";
 import styles from "./CardThree.module.css";
+import { useNavigate } from "react-router-dom";
 
 const CardThree = ({
   className = "",
@@ -9,6 +10,7 @@ const CardThree = ({
   profilelocation,
   propBackgroundImage,
   profileAge,
+  profileid
 }) => {
   const cardThreeStyle = useMemo(() => {
     return {
@@ -16,11 +18,19 @@ const CardThree = ({
     };
   }, [propBackgroundImage]);
 
+console.log(profileid)
+  const navigate = useNavigate()
+
+  const gotToNewPage=(id)=>{
+    navigate("/profile/"+id);
+  }
+
   return (
 
     <div
       className={[styles.cardThree, className].join(" ")}
-      style={{ ...cardThreeStyle, backgroundImage: `url(${profilephoto})`}}
+      style={{ ...cardThreeStyle, backgroundImage: `url(${profilephoto})`, cursor: "pointer"}}
+      onClick={ () => gotToNewPage(profileid)}
     >
       {/* <img className={styles.cardThreeChild} alt="" src={profilephoto} /> */}
       <div className={styles.cardThreeLabels} style={{ padding:"340px 20px 30px 20px"}}>
@@ -39,8 +49,9 @@ CardThree.propTypes = {
   profilephoto: PropTypes.string,
   profilename: PropTypes.string,
   profilelocation: PropTypes.string,
-
+  profileid: PropTypes.string,
   /** Style props */
+  profileAge: PropTypes.string,
   propBackgroundImage: PropTypes.any,
 };
 

@@ -7,6 +7,7 @@ const UserSchema = new mongoose.Schema({
   name: String,
   profilePicture: String,
   age: Number,
+  gender: String,
   dob: Date,
   education: String,
   hobbies: String,

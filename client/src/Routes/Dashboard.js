@@ -3,6 +3,7 @@ import FrameComponent from "../components/FrameComponent";
 import CardThree from "../components/CardThree";
 import styles from "./dashboard.module.css";
 
+
 const Dashboard = () => {
   const [users, setUsers] = useState([]);
 
@@ -12,6 +13,11 @@ const Dashboard = () => {
       .then(data => setUsers(data))
       .catch(error => console.error('Error fetching users:', error));
   }, []);
+
+
+
+
+
 
   // Function to chunk array into groups of a given size
   const chunkArray = (array, size) => {
@@ -33,7 +39,7 @@ const Dashboard = () => {
         <FrameComponent />
 
           {userGroups.map((group, groupIndex) => (
-        <section className={styles.cardRowTwo}>
+            <section key={groupIndex} className={styles.cardRowTwo}>
               {group.map(user => {
                 const imageUrl = user.profilePicture
                   ? `http://localhost:3001/${user.profilePicture.replace('\\', '/')}`
@@ -45,6 +51,7 @@ const Dashboard = () => {
                     profilename={user.name}
                     profilelocation={user.location}
                     profileAge={user.age}
+                    profileid={user._id}
                   />
                 );
               })}
