@@ -38,6 +38,7 @@ const RegSec1 = () => {
     const formData = new FormData();
     formData.append('userId', user._id);  // Append user ID from context
     formData.append('age', age);
+    formData.append('gender', gender);
     formData.append('dob', dob);
     formData.append('education', education);
     formData.append('hobbies', hobbies);
@@ -92,8 +93,8 @@ const RegSec1 = () => {
             value={gender}
             onChange={(e) => setGender(e.target.value)}
           >
-            <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
-            <FormControlLabel value="No" control={<Radio />} label="No" />
+            <FormControlLabel value="Male" control={<Radio />} label="Male" />
+            <FormControlLabel value="Female" control={<Radio />} label="Female" />
           </RadioGroup>
         </Grid>
         <Grid item xs={12}>

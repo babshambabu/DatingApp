@@ -130,3 +130,29 @@
     letter-spacing: normal;
   }
   
+.filterButton {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+}
+
+.root {
+  position: relative;
+  margin-top:100px;
+}
+
+
+
+.filterButtonContainer {
+  position: absolute;
+  top: 50px;
+  right: 20px;
+}
+
+.filterButton {
+  cursor: pointer;
+  width: 40px; /* Adjust the size as needed */
+  height: 40px; /* Adjust the size as needed */
+}
+

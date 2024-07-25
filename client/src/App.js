@@ -15,6 +15,7 @@ import Profile from './Routes/Profile';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import { AuthContext } from './AuthContext';
 import ProfilePage from './Routes/ProfilePage';
+import FilterProfile from './Routes/FilterPage';
 //import SideNav from './components/SideNav';
 import Sent from './components/Sent';
 import Received from './components/Received';
@@ -25,6 +26,7 @@ import ShortlistedBy from './components/ShortlistedBy';
 import Contacted from './components/Contacted';
 import Messages from './components/Messages';
 import { Container, CssBaseline } from '@mui/material';
+import FilteredProfiles from "./components/FilteredProfiles"
 
 const App = () => {
   const { checkLoginStatus } = useContext(AuthContext);
@@ -68,6 +70,8 @@ const App = () => {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/requests" element={<Requests />} />
           <Route path="/profile/*" element={<Profile />} />
+          <Route path="/filter" element={<FilterProfile/>} />
+          <Route path="/filteredProfiles" element={<FilteredProfiles />} />
         </Routes>
       </Container>
         

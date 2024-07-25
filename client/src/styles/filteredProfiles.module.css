@@ -1,0 +1,34 @@
+.backgroundShadow {
+    width: 314.8px;
+    height: 0px;
+    position: relative;
+    filter: blur(376.6px);
+    border-radius: 18.83px;
+    background-color: rgba(227, 193, 255, 0.7);
+    display: none;
+  }
+  
+  .content {
+    height: 440px;
+  }
+  
+  .cardRowTwo {
+    align-self: stretch;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 0 var(--padding-base) 0 0;
+    gap: var(--gap-mini);
+  }
+  
+  .root {
+    position: relative;
+    margin-top: 100px;
+    width: 100%;
+    background-color: var(--color-white);
+    padding: 0 var(--padding-9xs) var(--padding-xl) var(--padding-xl);
+    gap: 24px;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+  }
+  

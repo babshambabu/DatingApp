@@ -1,12 +1,13 @@
 import PropTypes from "prop-types";
 import styles from "./FrameComponent.module.css";
+import FilterPage from "../Routes/FilterPage";
 
 const FrameComponent1 = ({ className = "" }) => {
   return (
     <div className={[styles.footerWrapper, className].join(" ")}>
       <div className={styles.footer}>
         <div className={styles.footerSeparator} />
-        <div className={styles.messageWrapper}>
+        {/* <div className={styles.messageWrapper}>
           <img
             className={styles.messageIcon}
             loading="lazy"
@@ -29,7 +30,11 @@ const FrameComponent1 = ({ className = "" }) => {
             alt=""
             src="/icons/ellipse-716@2x.png"
           />
-        </div>
+        </div> */}
+        {/* <div className="filterProfile">
+          <FilterPage/>
+
+        </div> */}
       </div>
     </div>
   );

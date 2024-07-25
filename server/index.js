@@ -103,6 +103,29 @@ app.post("/signup", async (req, res) => {
   }
 });
 
+app.post('/api/users', async (req, res) => {
+
+  const { gender, education, location } = req.body;
+  const query = {};
+
+  if (gender && gender !== 'both') {
+    console.log(gender);
+    query.gender = gender;
+  }
+  if (education) {
+    query.education = education;
+  }
+  if (location) {
+    query.location = location;
+  }
+
+  try {
+    const users = await User.find(query);
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({ error: 'Error fetching users' });
+  }
+});
 
 
 

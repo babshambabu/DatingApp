@@ -23,13 +23,14 @@ router.post('/register', verifyToken, upload.fields([
   { name: 'images', maxCount: 10 }
 ]), async (req, res) => {
   try {
-    const { age, dob, education, hobbies, interests, drinking, smoking } = req.body;
+    const { age, gender,dob, education, hobbies, interests, drinking, smoking } = req.body;
     const profilePicture = req.files['profilePicture'] ? req.files['profilePicture'][0].path : null;
     const reel = req.files['reel'] ? req.files['reel'][0].path : null;
     const images = req.files['images'] ? req.files['images'].map(file => file.path) : [];
 
     const updatedUser = await User.findByIdAndUpdate(req.userId, {
       age,
+      gender,
       dob,
       education,
       hobbies,
@@ -105,7 +106,29 @@ router.post('/register2', verifyToken, async (req, res) => {
       res.status(400).send('Invalid Token');
     }
   });
- 
+  router.post('/filter', async (req, res) => {
+    const { gender, education, location } = req.body;
+  
+    try {
+      const data = await fs.readFile('path/to/your/database.json', 'utf8');
+      const users = JSON.parse(data);
+  
+      const filteredUsers = users.filter(user => {
+        const matchesGender = gender === 'both' || user.gender === gender;
+        const matchesEducation = !education || user.education.includes(education);
+        const matchesLocation = !location || user.location.includes(location);
+  
+        return matchesGender && matchesEducation && matchesLocation;
+      });
+  
+      res.json(filteredUsers);
+    } catch (error) {
+      console.error('Error reading users from database:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  });
+  
+  
 
 
 module.exports = router;
