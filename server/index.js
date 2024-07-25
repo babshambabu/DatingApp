@@ -140,3 +140,17 @@ const port = process.env.PORT || 3001;
 const server = app.listen(port, () => {
   console.log(`server is running on port ${port}`);
 });
+
+app.get('/api/users/:userId', async (req, res) => {
+  try {
+
+    const user = await User.findById(req.params.userId);
+    if (!user) {
+      return res.status(404).send('User not found');
+    }
+    console.log(user)
+    res.json(user);
+  } catch (error) {
+    res.status(500).send('Server error');
+  }
+});

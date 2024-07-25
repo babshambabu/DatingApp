@@ -1,11 +1,28 @@
-//import { useCallback } from "react";
+import React, { useEffect, useState } from 'react';
 import styles from "./Profile.module.css";
+import { useParams } from 'react-router-dom';
 
 const Root = () => {
  
-  
 
- 
+    const { userId } = useParams();
+    const [user, setUser] = useState(null);
+
+    useEffect(() => {
+      fetch(`http://localhost:3001/api/users/${userId}`)
+        .then(response => response.json())
+        .then(data => setUser(data))
+        .catch(error => console.error('Error fetching user:', error));
+    }, [userId]);
+  
+    if (!user) {
+      return <div>Loading...</div>;
+    }
+    console.log(user)
+  
+    const imageUrl = user.profilePicture
+    ? `http://localhost:3001/${user.profilePicture.replace('\\', '/')}`
+    : "/uploads/w9.jpg";
 
   return (
     <div className={styles.root}>
@@ -13,19 +30,10 @@ const Root = () => {
       
 
       <section className={styles.frameParent}>
- 
+      <img className={styles.rootChild} alt="" src={imageUrl} />
       
         <div className={styles.frameGroup}>
-          <div className={styles.frameWrapper}>
-            <div className={styles.iGetAlongBestWithPeopleWParent}>
-              <div className={styles.iGetAlong}>
-                I get along best with people who
-              </div>
-              <div className={styles.canHaveA}>
-                Can have a good laugh together and understand each other's humor
-              </div>
-            </div>
-          </div>
+
           <div className={styles.divider} />
         </div>
       </section>
@@ -40,7 +48,7 @@ const Root = () => {
                 
                 <div className={styles.age}>Age</div>
               </div>
-              <div className={styles.basicInfoItem}>24</div>
+              <div className={styles.basicInfoItem}>{user.age}</div>
             </div>
             <div
               className={styles.basicInfoItems1}
@@ -50,14 +58,14 @@ const Root = () => {
                 
                 <div className={styles.gender}>Gender</div>
               </div>
-              <div className={styles.male}>Male</div>
+              <div className={styles.male}>{user.gender}</div>
             </div>
             <div className={styles.basicInfoItems2}>
               <div className={styles.frameParent1}>
                 
                 <div className={styles.location}>Location</div>
               </div>
-              <div className={styles.tamilNaduIndia}> Kochi</div>
+              <div className={styles.tamilNaduIndia}> {user.location}</div>
             </div>
            
             <div
@@ -68,7 +76,7 @@ const Root = () => {
                 
                 <div className={styles.education}>Education</div>
               </div>
-              <div className={styles.masters}>B-Tech</div>
+              <div className={styles.masters}>{user.education}</div>
             </div>
           </div>
           
@@ -92,6 +100,7 @@ const Root = () => {
               <div className={styles.frameParent6}>
                 
                 <div className={styles.interests}>Interests</div>
+                <div className={styles.masters}>{user.interests}</div>
               </div>
               
             </div>

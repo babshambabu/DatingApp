@@ -52,13 +52,15 @@ const Dashboard = () => {
 
   return (
     <>
-    <div className={styles.filterButtonContainer}>
+        <div className="container" >
+
         <img 
           src={filterImg} 
           alt="Filter" 
           className={styles.filterButton} 
           onClick={handleFilterButtonClick} 
         />
+
       </div>
     <div className={styles.root}>
     
