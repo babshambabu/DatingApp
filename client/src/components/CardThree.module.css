@@ -1,0 +1,67 @@
+.cardThreeChild,
+.cardThreeLabelsChild {
+  width: 160px;
+  position: relative;
+  display: none;
+  height:"440px"
+}
+.cardThreeChild {
+  height: 180px;
+  border-radius: var(--br-xs);
+  object-fit: cover;
+}
+.cardThreeLabelsChild {
+  height: 60px;
+  border-radius: 0 0 var(--br-xs) var(--br-xs);
+  background: linear-gradient(0deg, #000, transparent);
+}
+.designerTamilnadu,
+.trishita24y {
+  position: relative;
+  display: inline-block;
+  z-index: 2;
+}
+.trishita24y {
+  letter-spacing: 0.04em;
+  font-weight: 500;
+  min-width: 92px;
+}
+.designerTamilnadu {
+  font-size: var(--font-size-3xs);
+  line-height: 13px;
+  color: var(--color-gainsboro-100);
+  min-width: 103px;
+}
+.cardThree,
+.cardThreeLabels {
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.cardThreeLabels {
+  border-radius: 0 0 var(--br-xs) var(--br-xs);
+  background: linear-gradient(0deg, #000, transparent);
+  flex-direction: column;
+  padding: var(--padding-5xs) var(--padding-5xs) var(--padding-base);
+  gap: var(--gap-11xs);
+  z-index: 1;
+}
+.cardThree {
+  border-radius: var(--br-xs);
+  flex-direction: row;
+  padding: var(--padding-101xl) 0 0;
+  box-sizing: border-box;
+/*  background-image: url(/public/icons/rectangle-346248512@2x.png); */
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: top;
+  min-width: 104px;
+  text-align: left;
+  font-size: var(--font-size-sm);
+  color: var(--color-white);
+  font-family: var(--font-poppins);
+}
+.CardThree_cardThreeLabels__uekxt{
+  padding:350px 0px 0px 0px;
+}

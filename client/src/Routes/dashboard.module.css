@@ -1,0 +1,132 @@
+.backgroundShadow {
+    width: 314.8px;
+    height: 0px;
+    position: relative;
+    filter: blur(376.6px);
+    border-radius: 18.83px;
+    background-color: rgba(227, 193, 255, 0.7);
+    display: none;
+  }
+  .fill17Icon {
+    height: 40px;
+    width: 377px;
+    position: relative;
+    display: none;
+    mix-blend-mode: normal;
+    max-width: 100%;
+  }
+  .a,
+  .iconsnetworkstatusBar {
+    position: relative;
+    z-index: 1;
+  }
+  .a {
+    text-decoration: none;
+    letter-spacing: 0.07px;
+    font-weight: 700;
+    color: inherit;
+    display: inline-block;
+    min-width: 30.2px;
+    flex-shrink: 0;
+  }
+  .iconsnetworkstatusBar {
+    height: 11px;
+    width: 17.1px;
+  }
+  .iconsbuttarystatusBar,
+  .iconswifistatusBar {
+    height: 11px;
+    width: 15.1px;
+    position: relative;
+    z-index: 1;
+  }
+  .styles.content{
+    height: 440px;
+    
+  }
+  .iconsbuttarystatusBar {
+    width: 25.1px;
+    object-fit: cover;
+  }
+  .statusBarIcons {
+    height: 11.4px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: flex-start;
+    gap: 5.3px;
+  }
+  .statusBarIconsWrapper,
+  .statusBarlight {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 3.9px 0 0;
+  }
+  .statusBarlight {
+    margin-left: -21px;
+    width: 377px;
+    background-color: var(--color-gray);
+    overflow: hidden;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 14.1px 14px 2.9px 31px;
+    box-sizing: border-box;
+    top: 0;
+    z-index: 99;
+    position: sticky;
+    max-width: 108%;
+    flex-shrink: 0;
+    gap: var(--gap-xl);
+    text-align: left;
+    font-size: 15px;
+    color: var(--color-gray);
+    font-family: var(--font-poppins);
+  }
+  .mytamildateLogoChild {
+    height: 40px;
+    width: 114px;
+    position: relative;
+    object-fit: cover;
+  }
+  .mytamildateLogo {
+    flex-direction: row;
+    padding: 0 var(--padding-xl) 0 0;
+  }
+  .cardRowTwo,
+  .content,
+  .mytamildateLogo,
+  .root {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+  .cardRowTwo {
+    align-self: stretch;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 0 var(--padding-base) 0 0;
+    gap: var(--gap-mini);
+  }
+  .content,
+  .root {
+    flex-direction: column;
+    box-sizing: border-box;
+  }
+  .content {
+    align-self: stretch;
+    padding: 0 0 105px;
+    gap: 16px;
+    max-width: 100%;
+  }
+  .root {
+    width: 100%;
+    position: relative;
+    background-color: var(--color-white);
+    padding: 0 var(--padding-9xs) var(--padding-xl) var(--padding-xl);
+    gap: 24px;
+    line-height: normal;
+    letter-spacing: normal;
+  }
+  
