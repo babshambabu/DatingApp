@@ -18,7 +18,7 @@ const CardThree = ({
     };
   }, [propBackgroundImage]);
 
-console.log(profileid)
+
   const navigate = useNavigate()
 
   const gotToNewPage=(id)=>{
