@@ -78,7 +78,7 @@ app.post("/login", async (req, res) => {
   }
   console.log("in login");
   const token = jwt.sign(
-    { id: user._id, name: user.name, age: user.age },
+    { id: user._id, name: user.name, age: user.age , likes: user.likes},
     process.env.JWTSECRET,
     { expiresIn: "1h" }
   );
@@ -159,10 +159,10 @@ app.get('/api/users/:userId', async (req, res) => {
 });
 
 app.post('/api/users/:id/like', verifyToken, async (req, res) => {
-  console.log("in like")
+
   try {
-      const { id } = req.params;
-      const { likedBy } = req.body;
+      const id = req.params.id;
+      const likedBy  = req.userId;
 
       const user = await User.findById(id);
       if (!user) {
@@ -172,11 +172,12 @@ app.post('/api/users/:id/like', verifyToken, async (req, res) => {
       if (!user.likes.includes(likedBy)) {
           user.likes.push(likedBy);
           await user.save();
+          console.log("in like fron",req.params,"by", req.userId)
     } else {
       user.likes = user.likes.filter(like => like !== likedBy);
       await user.save();
+      console.log("in unlike fron",req.params,"by", req.userId)
       }
-
     res.status(200).json({ message: 'Profile liked/unliked successfully' });
   } catch (error) {
       res.status(500).json({ message: 'Server error', error });

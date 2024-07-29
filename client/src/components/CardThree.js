@@ -8,12 +8,16 @@ const CardThree = ({ user }) => {
   const { currentUser } = useContext(AuthContext);
   const [liked, setLiked] = useState(false);
 
+
+  const token=localStorage.getItem('token');
+  console.log("current user",currentUser.id)
+console.log(currentUser)
   useEffect(() => {
     if(user.likes)
-    if (user.likes.includes(currentUser._id)) {
+    if (user.likes.includes(currentUser.id)) {
           setLiked(true);
       }
-  }, [user.likes, currentUser._id]);
+  }, [user.likes, currentUser.id]);
 
   const handleLikeToggle = async (e) => {
     e.stopPropagation();
@@ -22,9 +26,9 @@ const CardThree = ({ user }) => {
               method: 'POST',
               headers: {
                   'Content-Type': 'application/json',
-          Authorization: `Bearer ${currentUser.token}`,
+          Authorization: `Bearer ${token}`,
               },
-        body: JSON.stringify({ likedBy: currentUser._id }),
+        body: JSON.stringify({ likedBy: currentUser.id }),
           });
 
           if (!response.ok) {
@@ -64,7 +68,7 @@ const CardThree = ({ user }) => {
           style={{ color: "red", position: "relative", right: "0px" }} 
           onClick={handleLikeToggle}
         >
-          {liked ? 'Unlike' : 'Like'}
+          {liked ? 'Unshortlist' : 'Shortlist'}
         </div>
       </div>
     </div>

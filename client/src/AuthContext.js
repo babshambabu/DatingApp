@@ -40,15 +40,13 @@ export const AuthProvider = ({ children }) => {
     try {
       console.log("signup start");
       const response = await axios.post('http://localhost:3001/signup', { name, email, password });
-      console.log(response.data);
       const { token } = response.data;
-      console.log(token);
+
       localStorage.setItem('token', token);
       setToken(token);
       const decoded = jwtDecode(token);
-      console.log(decoded);
       setCurrentUser(decoded);
-      console.log("signup end");
+
       return decoded;
     } catch (error) {
       console.error('Signup error:', error);
@@ -60,7 +58,7 @@ export const AuthProvider = ({ children }) => {
     try {
       console.log("login start");
       const response = await axios.post('http://localhost:3001/login', { email, password });
-      console.log(response.data);
+      console.log("in",response.data);
       const { token } = response.data;
       console.log(token);
       localStorage.setItem('token', token);
