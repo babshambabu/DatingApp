@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useContext } from 'react';
 import './App.css';
 import Navbar from './components/Navbar';
 import Login from './Routes/Login';
@@ -12,11 +12,11 @@ import LoginOtp from './Routes/LoginOtp';
 import Dashboard from './Routes/Dashboard';
 import Requests from './Routes/Requests';
 import Profile from './Routes/Profile';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { AuthContext } from './AuthContext';
 import ProfilePage from './Routes/ProfilePage';
 import FilterProfile from './Routes/FilterPage';
-//import SideNav from './components/SideNav';
+
 import Sent from './components/Sent';
 import Received from './components/Received';
 import Accepted from './components/Accepted';
@@ -28,17 +28,14 @@ import Messages from './components/Messages';
 import { Container, CssBaseline } from '@mui/material';
 import FilteredProfiles from "./components/FilteredProfiles"
 
-const App = () => {
-  const { checkLoginStatus } = useContext(AuthContext);
-  const navigate = useNavigate();
 
-  useEffect(() => {
-    const verifyLoginStatus = async () => {
-      const isLoggedIn = await checkLoginStatus();
-      console.log(isLoggedIn)
-    };
-    verifyLoginStatus();
-  }, [checkLoginStatus, navigate]);
+
+
+const App = () => {
+  const { currentUser } = useContext(AuthContext);
+
+
+console.log("home",currentUser)
 
   // const { user } = useContext(AuthContext);
 
@@ -50,7 +47,7 @@ const App = () => {
       <CssBaseline />
       <Container maxWidth="lg">
         <Routes>
-          <Route path="/" element={ (checkLoginStatus)? <Home /> : <Dashboard />} />
+          <Route path="/" element={ ( currentUser == null )? <Home /> : <Dashboard />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/login-otp" element={<LoginOtp />} />

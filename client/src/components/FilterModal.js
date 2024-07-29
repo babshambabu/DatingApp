@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styles from '../styles/filterModal.module.css';
 
-const FilterModal = ({ isOpen, onClose, onApply }) => {
+const FilterModal = ({ isOpen, onClose, onApply, filters }) => {
   const [gender, setGender] = useState('both');
   const [education, setEducation] = useState('');
   const [location, setLocation] = useState('');
@@ -26,8 +26,8 @@ const FilterModal = ({ isOpen, onClose, onApply }) => {
           <label>Gender:</label>
           <select value={gender} onChange={(e) => setGender(e.target.value)}>
             <option value="both">Both</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
           </select>
         </div>
         <div>

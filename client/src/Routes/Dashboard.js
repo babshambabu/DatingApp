@@ -71,17 +71,11 @@ const Dashboard = () => {
           {userGroups.map((group, groupIndex) => (
             <section key={groupIndex} className={styles.cardRowTwo}>
               {group.map(user => {
-                const imageUrl = user.profilePicture
-                  ? `http://localhost:3001/${user.profilePicture.replace('\\', '/')}`
-                  : "/uploads/w9.jpg";
+                
                 return (
                   <CardThree 
                     key={user._id}
-                    profilephoto={imageUrl}
-                    profilename={user.name}
-                    profilelocation={user.location}
-                    profileAge={user.age}
-                    profileid={user._id}
+                    user={user}
                   />
                 );
               })}
@@ -94,6 +88,7 @@ const Dashboard = () => {
           isOpen={isModalOpen} 
           onClose={() => setIsModalOpen(false)} 
           onApply={handleFilterApply}
+          filters={filters}
         />
       )}
     </div>

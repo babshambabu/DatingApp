@@ -38,7 +38,7 @@ const UserSchema = new mongoose.Schema({
     shortlistedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
     contacted: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
   } ,
-
+  likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
   // Additional fields
   createdAt: {
     type: Date,

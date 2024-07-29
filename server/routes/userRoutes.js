@@ -17,6 +17,8 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
+
+
 router.post('/register', verifyToken, upload.fields([
   { name: 'profilePicture', maxCount: 1 },
   { name: 'reel', maxCount: 1 },
@@ -48,6 +50,8 @@ router.post('/register', verifyToken, upload.fields([
   }
 });
 
+
+
 router.post('/register2', verifyToken, async (req, res) => {
     try {
       const { role, companyName, designation, location, jobTitle, expertiseLevel } = req.body;
@@ -67,6 +71,8 @@ router.post('/register2', verifyToken, async (req, res) => {
     }
   });
   
+
+
   router.post('/registration3', verifyToken, async(req, res) => {
     try {
     const { relationshipType, registerInMatrimony } = req.body;
@@ -83,6 +89,9 @@ router.post('/register2', verifyToken, async (req, res) => {
     res.status(200).json({ message: 'Registration step 3 completed' });
   });
   
+
+
+
   router.put('/user/profile', upload.single('profilePicture'), async (req, res) => {
     const token = req.headers['x-access-token'];
     if (!token) return res.status(401).send('Access Denied');
@@ -106,6 +115,8 @@ router.post('/register2', verifyToken, async (req, res) => {
       res.status(400).send('Invalid Token');
     }
   });
+
+
   router.post('/filter', async (req, res) => {
     const { gender, education, location } = req.body;
   

@@ -20,14 +20,14 @@ export const AuthProvider = ({ children }) => {
     images: [],
     reel: null,
   });
-  const [user, setUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState(null);
   const [token, setToken] = useState(localStorage.getItem('token'));
 
   useEffect(() => {
     if (token) {
       try {
       const decoded = jwtDecode(token);
-      setUser(decoded);
+        setCurrentUser(decoded);
       } catch (error) {
         console.error('Token decode error:', error);
         setToken(null);
@@ -35,6 +35,7 @@ export const AuthProvider = ({ children }) => {
       }
     }
   }, [token]);
+
   const signup = async (name, email, password) => {
     try {
       console.log("signup start");
@@ -46,7 +47,7 @@ export const AuthProvider = ({ children }) => {
       setToken(token);
       const decoded = jwtDecode(token);
       console.log(decoded);
-      setUser(decoded);
+      setCurrentUser(decoded);
       console.log("signup end");
       return decoded;
     } catch (error) {
@@ -57,36 +58,33 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      console.log("login start")
+      console.log("login start");
       const response = await axios.post('http://localhost:3001/login', { email, password });
-      console.log(response.data)
+      console.log(response.data);
       const { token } = response.data;
-      console.log(token)
+      console.log(token);
       localStorage.setItem('token', token);
       setToken(token);
       const decoded = jwtDecode(token);
       console.log(decoded);
-      setUser(decoded);
-      console.log("login end")
+      setCurrentUser(decoded);
+      console.log("login end");
       return decoded;
     } catch (error) {
       console.error('Login error:', error);
-      return false
+      return false;
     }
-    
   };
 
   const logout = () => {
     localStorage.removeItem('token');
     setToken(null);
-    setUser(null);
+    setCurrentUser(null);
   };
 
   const checkLoginStatus = async () => {
-    if (!token || token === "undefined" || token === undefined
-    ) return false;
+    if (!token || token === "undefined" || token === undefined) return false;
     try {
-      //alert(token)
       const response = await axios.get('http://localhost:3001/auth/login/status', {
         headers: { 'x-access-token': token },
       });
@@ -98,7 +96,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ formData, setFormData, user,signup , login, logout, checkLoginStatus }}>
+    <AuthContext.Provider value={{ formData, setFormData, currentUser, signup, login, logout, checkLoginStatus }}>
       {children}
     </AuthContext.Provider>
   );

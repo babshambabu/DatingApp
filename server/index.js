@@ -12,8 +12,9 @@ const User = require("./models/userSchema");
 const userRoutes = require("./routes/userRoutes");
 const path = require("path");
 require("./middlewares/passport"); 
+const verifyToken = require('./middlewares/auth');
 
-//load env vaiables
+// Load env variables
 require("dotenv").config();
 
 // Initialize express app
@@ -39,6 +40,12 @@ app.use(
   })
 );
 
+app.use((req, res, next) => {
+  console.log('URL', req.url);
+  console.log('Method', req.method);
+  next();
+});
+
 app.use(passport.initialize());
 app.use(passport.session());
 app.use("/auth", authRoute);
@@ -56,6 +63,7 @@ mongoose
     console.log("DB CONNECTION ERROR", err);
   });
 
+// Login route
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
@@ -76,6 +84,8 @@ app.post("/login", async (req, res) => {
   );
   res.status(200).json({ token });
 });
+
+// Signup route
 app.post("/signup", async (req, res) => {
   const { name, email, password } = req.body;
   try {
@@ -103,8 +113,9 @@ app.post("/signup", async (req, res) => {
   }
 });
 
+// API routes
 app.post('/api/users', async (req, res) => {
-
+  console.log("reached api user post")
   const { gender, education, location } = req.body;
   const query = {};
 
@@ -127,23 +138,15 @@ app.post('/api/users', async (req, res) => {
   }
 });
 
-
-
 app.get('/api/users', async (req, res) => {
+  console.log("reached api user")
   const users = await User.find();
   res.json(users);
 });
 
-
-// Start server
-const port = process.env.PORT || 3001;
-const server = app.listen(port, () => {
-  console.log(`server is running on port ${port}`);
-});
-
 app.get('/api/users/:userId', async (req, res) => {
+  console.log("in users")
   try {
-
     const user = await User.findById(req.params.userId);
     if (!user) {
       return res.status(404).send('User not found');
@@ -153,4 +156,35 @@ app.get('/api/users/:userId', async (req, res) => {
   } catch (error) {
     res.status(500).send('Server error');
   }
+});
+
+app.post('/api/users/:id/like', verifyToken, async (req, res) => {
+  console.log("in like")
+  try {
+      const { id } = req.params;
+      const { likedBy } = req.body;
+
+      const user = await User.findById(id);
+      if (!user) {
+          return res.status(404).json({ message: 'User not found' });
+      }
+
+      if (!user.likes.includes(likedBy)) {
+          user.likes.push(likedBy);
+          await user.save();
+    } else {
+      user.likes = user.likes.filter(like => like !== likedBy);
+      await user.save();
+      }
+
+    res.status(200).json({ message: 'Profile liked/unliked successfully' });
+  } catch (error) {
+      res.status(500).json({ message: 'Server error', error });
+  }
+});
+
+// Start server
+const port = process.env.PORT || 3001;
+const server = app.listen(port, () => {
+  console.log(`server is running on port ${port}`);
 });
