@@ -10,8 +10,7 @@ const CardThree = ({ user }) => {
 
 
   const token=localStorage.getItem('token');
-  console.log("current user",currentUser.id)
-console.log(currentUser)
+
   useEffect(() => {
     if(user.likes)
     if (user.likes.includes(currentUser.id)) {
